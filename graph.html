@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Seasonal Kiln Temperature</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<body style="margin: 0; padding: 20px; background: #fff; font-family: sans-serif;">
+  <h2>Temperature Over Time</h2>
+  <canvas id="tempChart" width="800" height="400"></canvas>
+  <script>
+    const ctx = document.getElementById('tempChart').getContext('2d');
+
+    const data = {
+      labels: ["2025-02-01", "2025-02-02", "2025-02-03", "2025-04-01", "2025-04-02"],
+      datasets: [{
+        label: 'Temperature (°C)',
+        data: [22.5, 23.0, 22.8, 25.1, 26.3],
+        borderColor: 'red',
+        fill: false,
+        tension: 0.3
+      }]
+    };
+
+    const config = {
+      type: 'line',
+      data: data,
+      options: {
+        plugins: {
+          annotation: {
+            annotations: {
+              region1: {
+                type: 'box',
+                xMin: "2025-02-01",
+                xMax: "2025-03-31",
+                backgroundColor: 'rgba(0, 0, 255, 0.1)'
+              },
+              region2: {
+                type: 'box',
+                xMin: "2025-04-01",
+                xMax: "2025-05-31",
+                backgroundColor: 'rgba(255, 0, 0, 0.1)'
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'time',
+            time: { unit: 'day' },
+            title: { display: true, text: 'Date' }
+          },
+          y: {
+            title: { display: true, text: 'Temperature (°C)' }
+          }
+        }
+      }
+    };
+
+    new Chart(ctx, config);
+  </script>
+</body>
+</html>
